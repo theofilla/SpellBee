@@ -1,2 +1,2 @@
-# Spell Bee
-A simple spelling game created with Cocos Creator
+# hello-world
+Hello world new project template.

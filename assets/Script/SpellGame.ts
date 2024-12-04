@@ -49,6 +49,8 @@ export default class SpellGame extends cc.Component {
     startGame() {
 
         if(!this.gameinProgress){
+        var manager = cc.director.getCollisionManager();
+        manager.enabled = true;
         this.lifeCounter = 3;
         this.startButton.node.active = false;
         this.player.enablePlayer();
@@ -56,8 +58,11 @@ export default class SpellGame extends cc.Component {
         this.currentWord = this.textToSpeech.getStringToSpeak();
         this.schedule(this.generateLetters, 1);
         this.gameinProgress = true;
-        }
+        this.lifeHearts.forEach((heart) => {
+            heart.active = true;    
+        });
     }
+}
 
     getRandomPosition(): cc.Vec2 {
         const x = Math.random() * this.spellBox.width - this.spellBox.width / 2;
@@ -85,23 +90,28 @@ export default class SpellGame extends cc.Component {
     this.scheduleOnce(() => {
         letterNode.destroy();
     },this.speed);
-    letterNode.on(cc.Node.EventType.TOUCH_END, (evt) => {
-       this.checkLetter(letterNode, randomLetter);
-    });
+
+    // letterNode.on(cc.Node.EventType.TOUCH_END, (evt) => {
+    //     this.checkLetter(letterNode, randomLetter);
+    //  });
+     
     }
 
-    public checkLetter(letterNode: cc.Node, randomLetter: string = letterNode.getComponent(cc.Label).string) {
+    public checkLetter(letterNode: cc.Node, randomLetter: string = letterNode.getComponent(cc.Label).string) :boolean {
 
-       
+            let res = false;
             if (this.currentWord.length > 0 && randomLetter === this.currentWord[0].toUpperCase()) {
             // Correct letter
             this.currentWord = this.currentWord.slice(1);
-            
+            letterNode.color = cc.Color.GREEN;
+            res = true;
             } else {
             // Incorrect letter
+            letterNode.color = cc.Color.RED;
             this.loseLife();
+            res = false;
             }
-            if(this.currentWord.length == 0)
+             if(this.currentWord.length == 0)
             {
                 this.unschedule(this.generateLetters);
                 this.score.string = ""+ parseInt(this.score.string) + 1;
@@ -110,10 +120,11 @@ export default class SpellGame extends cc.Component {
                     this.gameinProgress = false;
                     this.startGame();      
                 },2);
-                
+               
             }
             // Remove the letter node after it is hit
             letterNode.destroy();
+            return res;
     }
     update() {
   
