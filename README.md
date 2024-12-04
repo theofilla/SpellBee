@@ -1,2 +1,2 @@
-# hello-world
-Hello world new project template.
+# Spell Bee
+A simple spelling game created with Cocos Creator
