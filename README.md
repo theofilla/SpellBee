@@ -1,2 +1,2 @@
-# SpellBee
-Simple spelling game with cocos creator
+# hello-world
+Hello world new project template.

@@ -1,0 +1,19 @@
+{
+  "name": "spellBee",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "overrides": {
+    "glob": "7.2.3"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@types/random-word": "^2.0.2"
+  }
+}
